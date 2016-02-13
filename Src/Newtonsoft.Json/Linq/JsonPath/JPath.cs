@@ -40,7 +40,7 @@ namespace Newtonsoft.Json.Linq.JsonPath
 
         public JPath(string expression)
         {
-            ValidationUtils.ArgumentNotNull(expression, nameof(expression));
+            ValidationUtils.ArgumentNotNull(expression, "expression");
             _expression = expression;
             Filters = new List<PathFilter>();
 

@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Globalization;
-#if NET20
+#if NET20 
 using Newtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;
@@ -69,7 +69,7 @@ namespace Newtonsoft.Json.Utilities
         {
             // leave this a private to force code to use an explicit overload
             // avoids stack memory being reserved for the object array
-            ValidationUtils.ArgumentNotNull(format, nameof(format));
+            ValidationUtils.ArgumentNotNull(format, "format");
 
             return string.Format(provider, format, args);
         }
@@ -85,7 +85,7 @@ namespace Newtonsoft.Json.Utilities
         {
             if (s == null)
             {
-                throw new ArgumentNullException(nameof(s));
+                throw new ArgumentNullException("s");
             }
 
             if (s.Length == 0)
@@ -148,11 +148,11 @@ namespace Newtonsoft.Json.Utilities
         {
             if (source == null)
             {
-                throw new ArgumentNullException(nameof(source));
+                throw new ArgumentNullException("source");
             }
             if (valueSelector == null)
             {
-                throw new ArgumentNullException(nameof(valueSelector));
+                throw new ArgumentNullException("valueSelector");
             }
 
             var caseInsensitiveResults = source.Where(s => string.Equals(valueSelector(s), testValue, StringComparison.OrdinalIgnoreCase));

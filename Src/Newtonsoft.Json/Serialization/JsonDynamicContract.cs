@@ -23,7 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -85,7 +85,7 @@ namespace Newtonsoft.Json.Serialization
 
         internal bool TryGetMember(IDynamicMetaObjectProvider dynamicProvider, string name, out object value)
         {
-            ValidationUtils.ArgumentNotNull(dynamicProvider, nameof(dynamicProvider));
+            ValidationUtils.ArgumentNotNull(dynamicProvider, "dynamicProvider");
 
             CallSite<Func<CallSite, object, object>> callSite = _callSiteGetters.Get(name);
 
@@ -105,7 +105,7 @@ namespace Newtonsoft.Json.Serialization
 
         internal bool TrySetMember(IDynamicMetaObjectProvider dynamicProvider, string name, object value)
         {
-            ValidationUtils.ArgumentNotNull(dynamicProvider, nameof(dynamicProvider));
+            ValidationUtils.ArgumentNotNull(dynamicProvider, "dynamicProvider");
 
             CallSite<Func<CallSite, object, object, object>> callSite = _callSiteSetters.Get(name);
 

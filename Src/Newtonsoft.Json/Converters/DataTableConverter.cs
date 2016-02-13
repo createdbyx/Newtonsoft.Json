@@ -23,7 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-#if !(DOTNET || PORTABLE40 || PORTABLE)
+#if !(DOTNET || PORTABLE40 || PORTABLE || UNITY_5)
 using System.Collections.Generic;
 using System.Globalization;
 using Newtonsoft.Json.Utilities;

@@ -22,6 +22,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
+#if !UNITY_5
 
 using System;
 using System.Reflection;
@@ -96,3 +97,5 @@ using System.Security;
 [assembly: AssemblyVersion("7.0.0.0")]
 [assembly: AssemblyFileVersion("7.0.2.18802")]
 [assembly: CLSCompliant(true)]
+
+#endif

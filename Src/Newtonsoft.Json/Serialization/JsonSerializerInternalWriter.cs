@@ -27,7 +27,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
 using System.Dynamic;
 #endif
 using System.Diagnostics;
@@ -61,7 +61,7 @@ namespace Newtonsoft.Json.Serialization
         {
             if (jsonWriter == null)
             {
-                throw new ArgumentNullException(nameof(jsonWriter));
+                throw new ArgumentNullException("jsonWriter");
             }
 
             _rootType = objectType;
@@ -193,7 +193,7 @@ namespace Newtonsoft.Json.Serialization
                     JsonDictionaryContract dictionaryContract = (JsonDictionaryContract)valueContract;
                     SerializeDictionary(writer, (value is IDictionary) ? (IDictionary)value : dictionaryContract.CreateWrapper(value), dictionaryContract, member, containerContract, containerProperty);
                     break;
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
                 case JsonContractType.Dynamic:
                     SerializeDynamic(writer, (IDynamicMetaObjectProvider)value, (JsonDynamicContract)valueContract, member, containerContract, containerProperty);
                     break;
@@ -879,7 +879,7 @@ namespace Newtonsoft.Json.Serialization
         }
 #endif
 
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
         private void SerializeDynamic(JsonWriter writer, IDynamicMetaObjectProvider value, JsonDynamicContract contract, JsonProperty member, JsonContainerContract collectionContract, JsonProperty containerProperty)
         {
             OnSerializing(writer, contract, value);

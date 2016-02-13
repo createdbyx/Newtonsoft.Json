@@ -71,6 +71,12 @@
     <Compile Include="Converters\KeyValuePairConverter.cs" />
     <Compile Include="Converters\RegexConverter.cs" />
     <Compile Include="Converters\StringEnumConverter.cs" />
+    <Compile Include="Converters\Unity\ColorConverter.cs" />
+    <Compile Include="Converters\Unity\GameObjectConverter.cs" />
+    <Compile Include="Converters\Unity\Matrix4x4Converter.cs" />
+    <Compile Include="Converters\Unity\Vector2Converter.cs" />
+    <Compile Include="Converters\Unity\Vector3Converter.cs" />
+    <Compile Include="Converters\Unity\Vector4Converter.cs" />
     <Compile Include="Converters\VersionConverter.cs" />
     <Compile Include="Converters\XmlNodeConverter.cs" />
     <Compile Include="FloatParseHandling.cs" />

@@ -24,7 +24,7 @@
 #endregion
 
 #if !PORTABLE40
-#if !(PORTABLE || NET20 || NET35)
+#if !(PORTABLE || NET20 || NET35 || UNITY_5)
 using System.Numerics;
 #endif
 using System;
@@ -264,7 +264,7 @@ namespace Newtonsoft.Json.Converters
                 // cache results to prevent multiple reads which kills perf in large documents
                 if (_childNodes == null)
                 {
-                    _childNodes = _node.ChildNodes.Cast<XmlNode>().Select(WrapNode).ToList();
+                    _childNodes = _node.ChildNodes.Cast<XmlNode>().Select(node => WrapNode(node)).ToList();
                 }
 
                 return _childNodes;
@@ -295,7 +295,7 @@ namespace Newtonsoft.Json.Converters
                     return null;
                 }
 
-                return _node.Attributes.Cast<XmlAttribute>().Select(WrapNode).ToList();
+                return _node.Attributes.Cast<XmlAttribute>().Select(attribute => WrapNode(attribute)).ToList();
             }
         }
 
@@ -692,7 +692,7 @@ namespace Newtonsoft.Json.Converters
                 // cache results to prevent multiple reads which kills perf in large documents
                 if (_childNodes == null)
                 {
-                    _childNodes = Container.Nodes().Select(WrapNode).ToList();
+                    _childNodes = Container.Nodes().Select(node => WrapNode(node)).ToList();
                 }
 
                 return _childNodes;
@@ -985,7 +985,7 @@ namespace Newtonsoft.Json.Converters
             }
 #endif
 
-            throw new ArgumentException("Value must be an XML object.", nameof(value));
+            throw new ArgumentException("Value must be an XML object.", "value");
         }
 
         private void PushParentNamespaces(IXmlNode node, XmlNamespaceManager manager)
@@ -1550,7 +1550,7 @@ namespace Newtonsoft.Json.Converters
             }
             else if (reader.TokenType == JsonToken.Integer)
             {
-#if !(NET20 || NET35 || PORTABLE || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE || PORTABLE40 || UNITY_5)
                 if (reader.Value is BigInteger)
                 {
                     return ((BigInteger)reader.Value).ToString(CultureInfo.InvariantCulture);

@@ -66,7 +66,7 @@ namespace Newtonsoft.Json.Utilities
         {
             if (initial == null)
             {
-                throw new ArgumentNullException(nameof(initial));
+                throw new ArgumentNullException("initial");
             }
 
             if (collection == null)
@@ -83,7 +83,7 @@ namespace Newtonsoft.Json.Utilities
 #if (NET20 || NET35 || PORTABLE40)
         public static void AddRange<T>(this IList<T> initial, IEnumerable collection)
         {
-            ValidationUtils.ArgumentNotNull(initial, nameof(initial));
+            ValidationUtils.ArgumentNotNull(initial, "initial");
 
             // because earlier versions of .NET didn't support covariant generics
             initial.AddRange(collection.Cast<T>());
@@ -92,7 +92,7 @@ namespace Newtonsoft.Json.Utilities
 
         public static bool IsDictionaryType(Type type)
         {
-            ValidationUtils.ArgumentNotNull(type, nameof(type));
+            ValidationUtils.ArgumentNotNull(type, "type");
 
             if (typeof(IDictionary).IsAssignableFrom(type))
             {
@@ -101,8 +101,8 @@ namespace Newtonsoft.Json.Utilities
             if (ReflectionUtils.ImplementsGenericDefinition(type, typeof(IDictionary<,>)))
             {
                 return true;
-            }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             if (ReflectionUtils.ImplementsGenericDefinition(type, typeof(IReadOnlyDictionary<,>)))
             {
                 return true;
@@ -170,7 +170,7 @@ namespace Newtonsoft.Json.Utilities
 
             if (source == null)
             {
-                throw new ArgumentNullException(nameof(source));
+                throw new ArgumentNullException("source");
             }
 
             foreach (TSource local in source)

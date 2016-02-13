@@ -145,7 +145,7 @@ namespace Newtonsoft.Json.Bson
         /// <param name="dateTimeKindHandling">The <see cref="DateTimeKind" /> used when reading <see cref="DateTime"/> values from BSON.</param>
         public BsonReader(Stream stream, bool readRootValueAsArray, DateTimeKind dateTimeKindHandling)
         {
-            ValidationUtils.ArgumentNotNull(stream, nameof(stream));
+            ValidationUtils.ArgumentNotNull(stream, "stream");
             _reader = new BinaryReader(stream);
             _stack = new List<ContainerContext>();
             _readRootValueAsArray = readRootValueAsArray;
@@ -160,7 +160,7 @@ namespace Newtonsoft.Json.Bson
         /// <param name="dateTimeKindHandling">The <see cref="DateTimeKind" /> used when reading <see cref="DateTime"/> values from BSON.</param>
         public BsonReader(BinaryReader reader, bool readRootValueAsArray, DateTimeKind dateTimeKindHandling)
         {
-            ValidationUtils.ArgumentNotNull(reader, nameof(reader));
+            ValidationUtils.ArgumentNotNull(reader, "reader");
             _reader = reader;
             _stack = new List<ContainerContext>();
             _readRootValueAsArray = readRootValueAsArray;
@@ -556,7 +556,7 @@ namespace Newtonsoft.Json.Bson
                     SetToken(JsonToken.Integer, ReadInt64());
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(type), "Unexpected BsonType value: " + type);
+                    throw new ArgumentOutOfRangeException("type", "Unexpected BsonType value: " + type);
             }
         }
 

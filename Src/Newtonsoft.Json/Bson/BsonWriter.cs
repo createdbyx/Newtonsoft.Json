@@ -27,7 +27,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
 using System.Numerics;
 #endif
 using System.Text;
@@ -65,7 +65,7 @@ namespace Newtonsoft.Json.Bson
         /// <param name="stream">The stream.</param>
         public BsonWriter(Stream stream)
         {
-            ValidationUtils.ArgumentNotNull(stream, nameof(stream));
+            ValidationUtils.ArgumentNotNull(stream, "stream");
             _writer = new BsonBinaryWriter(new BinaryWriter(stream));
         }
 
@@ -75,7 +75,7 @@ namespace Newtonsoft.Json.Bson
         /// <param name="writer">The writer.</param>
         public BsonWriter(BinaryWriter writer)
         {
-            ValidationUtils.ArgumentNotNull(writer, nameof(writer));
+            ValidationUtils.ArgumentNotNull(writer, "writer");
             _writer = new BsonBinaryWriter(writer);
         }
 
@@ -232,7 +232,7 @@ namespace Newtonsoft.Json.Bson
         /// <param name="value">The <see cref="Object"/> value to write.</param>
         public override void WriteValue(object value)
         {
-#if !(NET20 || NET35 || PORTABLE || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE || PORTABLE40 || UNITY_5)
             if (value is BigInteger)
             {
                 InternalWriteValue(JsonToken.Integer);
@@ -294,7 +294,9 @@ namespace Newtonsoft.Json.Bson
         /// Writes a <see cref="UInt32"/> value.
         /// </summary>
         /// <param name="value">The <see cref="UInt32"/> value to write.</param>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public override void WriteValue(uint value)
         {
             if (value > int.MaxValue)
@@ -320,7 +322,9 @@ namespace Newtonsoft.Json.Bson
         /// Writes a <see cref="UInt64"/> value.
         /// </summary>
         /// <param name="value">The <see cref="UInt64"/> value to write.</param>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public override void WriteValue(ulong value)
         {
             if (value > long.MaxValue)
@@ -376,7 +380,9 @@ namespace Newtonsoft.Json.Bson
         /// Writes a <see cref="UInt16"/> value.
         /// </summary>
         /// <param name="value">The <see cref="UInt16"/> value to write.</param>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public override void WriteValue(ushort value)
         {
             base.WriteValue(value);
@@ -413,7 +419,9 @@ namespace Newtonsoft.Json.Bson
         /// Writes a <see cref="SByte"/> value.
         /// </summary>
         /// <param name="value">The <see cref="SByte"/> value to write.</param>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public override void WriteValue(sbyte value)
         {
             base.WriteValue(value);
@@ -500,7 +508,7 @@ namespace Newtonsoft.Json.Bson
         /// <param name="value">The Object ID value to write.</param>
         public void WriteObjectId(byte[] value)
         {
-            ValidationUtils.ArgumentNotNull(value, nameof(value));
+            ValidationUtils.ArgumentNotNull(value, "value");
 
             if (value.Length != 12)
             {
@@ -520,7 +528,7 @@ namespace Newtonsoft.Json.Bson
         /// <param name="options">The regex options.</param>
         public void WriteRegex(string pattern, string options)
         {
-            ValidationUtils.ArgumentNotNull(pattern, nameof(pattern));
+            ValidationUtils.ArgumentNotNull(pattern, "pattern");
 
             // hack to update the writer state
             UpdateScopeWithFinishedValue();

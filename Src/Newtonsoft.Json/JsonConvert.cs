@@ -26,10 +26,10 @@
 using System;
 using System.IO;
 using System.Globalization;
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
 using System.Numerics;
 #endif
-#if !(NET20 || NET35 || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE40 || UNITY_5)
 using System.Threading.Tasks;
 #endif
 using Newtonsoft.Json.Linq;
@@ -211,7 +211,9 @@ namespace Newtonsoft.Json
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>A JSON string representation of the <see cref="UInt16"/>.</returns>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public static string ToString(ushort value)
         {
             return value.ToString(null, CultureInfo.InvariantCulture);
@@ -222,7 +224,9 @@ namespace Newtonsoft.Json
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>A JSON string representation of the <see cref="UInt32"/>.</returns>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public static string ToString(uint value)
         {
             return value.ToString(null, CultureInfo.InvariantCulture);
@@ -238,7 +242,7 @@ namespace Newtonsoft.Json
             return value.ToString(null, CultureInfo.InvariantCulture);
         }
 
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
         private static string ToStringInternal(BigInteger value)
         {
             return value.ToString(null, CultureInfo.InvariantCulture);
@@ -250,7 +254,9 @@ namespace Newtonsoft.Json
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>A JSON string representation of the <see cref="UInt64"/>.</returns>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public static string ToString(ulong value)
         {
             return value.ToString(null, CultureInfo.InvariantCulture);
@@ -336,7 +342,9 @@ namespace Newtonsoft.Json
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>A JSON string representation of the <see cref="SByte"/>.</returns>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public static string ToString(sbyte value)
         {
             return value.ToString(null, CultureInfo.InvariantCulture);
@@ -444,7 +452,7 @@ namespace Newtonsoft.Json
         {
             if (delimiter != '"' && delimiter != '\'')
             {
-                throw new ArgumentException("Delimiter must be a single or double quote.", nameof(delimiter));
+                throw new ArgumentException("Delimiter must be a single or double quote.", "delimiter");
             }
 
             return JavaScriptUtils.ToEscapedJavaScriptString(value, delimiter, true, stringEscapeHandling);
@@ -510,7 +518,7 @@ namespace Newtonsoft.Json
                     return ToString((Uri)value);
                 case PrimitiveTypeCode.TimeSpan:
                     return ToString((TimeSpan)value);
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
                 case PrimitiveTypeCode.BigInteger:
                     return ToStringInternal((BigInteger)value);
 #endif
@@ -661,7 +669,7 @@ namespace Newtonsoft.Json
             return sw.ToString();
         }
 
-#if !(NET20 || NET35 || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE40 || UNITY_5)
         /// <summary>
         /// Asynchronously serializes the specified object to a JSON string.
         /// Serialization will happen on a new thread.
@@ -848,7 +856,7 @@ namespace Newtonsoft.Json
         /// <returns>The deserialized object from the JSON string.</returns>
         public static object DeserializeObject(string value, Type type, JsonSerializerSettings settings)
         {
-            ValidationUtils.ArgumentNotNull(value, nameof(value));
+            ValidationUtils.ArgumentNotNull(value, "value");
 
             JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
 
@@ -864,7 +872,7 @@ namespace Newtonsoft.Json
             }
         }
 
-#if !(NET20 || NET35 || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE40 || UNITY_5)
         /// <summary>
         /// Asynchronously deserializes the JSON to the specified .NET type.
         /// Deserialization will happen on a new thread.
@@ -969,7 +977,7 @@ namespace Newtonsoft.Json
             }
         }
 
-#if !(NET20 || NET35 || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE40 || UNITY_5)
         /// <summary>
         /// Asynchronously populates the object with values from the JSON string using <see cref="JsonSerializerSettings"/>.
         /// </summary>

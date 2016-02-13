@@ -26,12 +26,12 @@
 using System;
 using System.Collections;
 using Newtonsoft.Json.Schema;
-#if !(NET35 || NET20 || PORTABLE || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE || PORTABLE40 || UNITY_5)
 using System.Collections.Concurrent;
 #endif
 using System.Collections.Generic;
 using System.ComponentModel;
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
 using System.Dynamic;
 #endif
 using System.Globalization;
@@ -53,7 +53,7 @@ using System.Linq;
 #endif
 
 namespace Newtonsoft.Json.Serialization
-{
+{                                             
     internal struct ResolverContractKey : IEquatable<ResolverContractKey>
     {
         private readonly Type _resolverType;
@@ -111,7 +111,7 @@ namespace Newtonsoft.Json.Serialization
 #if !(NET20 || DOTNET || PORTABLE40 || PORTABLE)
             new EntityKeyMemberConverter(),
 #endif
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
             new ExpandoObjectConverter(),
 #endif
 #if !(PORTABLE40)
@@ -119,15 +119,25 @@ namespace Newtonsoft.Json.Serialization
 #endif
 #if !(DOTNET || PORTABLE40 || PORTABLE)
             new BinaryConverter(),
+#if !UNITY_5
             new DataSetConverter(),
-            new DataTableConverter(),
+            new DataTableConverter(),  
 #endif
-#if !(NET35 || NET20)
+#endif
+#if !(NET35 || NET20 || UNITY_5)
             new DiscriminatedUnionConverter(),
 #endif
             new KeyValuePairConverter(),
             new BsonObjectIdConverter(),
-            new RegexConverter()
+            new RegexConverter(),
+#if UNITY_5
+            new Vector2Converter(), 
+            new Vector3Converter(), 
+            new Vector4Converter(), 
+            new ColorConverter(), 
+            new GameObjectConverter(), 
+            new Matrix4x4Converter(), 
+#endif
         };
 
         private static readonly object TypeContractCacheLock = new object();
@@ -236,7 +246,7 @@ namespace Newtonsoft.Json.Serialization
         {
             if (type == null)
             {
-                throw new ArgumentNullException(nameof(type));
+                throw new ArgumentNullException("type");
             }
 
             DefaultContractResolverState state = GetState();
@@ -584,7 +594,7 @@ namespace Newtonsoft.Json.Serialization
 
             public EnumerableDictionaryWrapper(IEnumerable<KeyValuePair<TEnumeratorKey, TEnumeratorValue>> e)
             {
-                ValidationUtils.ArgumentNotNull(e, nameof(e));
+                ValidationUtils.ArgumentNotNull(e, "e");
                 _e = e;
             }
 
@@ -879,14 +889,14 @@ namespace Newtonsoft.Json.Serialization
 
         private static bool ShouldSkipDeserialized(Type t)
         {
-#if !(NET35 || NET20 || PORTABLE || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE || PORTABLE40 || UNITY_5)
             // ConcurrentDictionary throws an error in its OnDeserialized so ignore - http://json.codeplex.com/discussions/257093
             if (t.IsGenericType() && t.GetGenericTypeDefinition() == typeof(ConcurrentDictionary<,>))
             {
                 return true;
             }
 #endif
-#if !(NET35 || NET20)
+#if !(NET35 || NET20 || UNITY_5)
             if (t.Name == FSharpUtils.FSharpSetTypeName || t.Name == FSharpUtils.FSharpMapTypeName)
             {
                 return true;
@@ -898,7 +908,7 @@ namespace Newtonsoft.Json.Serialization
 
         private static bool ShouldSkipSerializing(Type t)
         {
-#if !(NET35 || NET20)
+#if !(NET35 || NET20 || UNITY_5)
             if (t.Name == FSharpUtils.FSharpSetTypeName || t.Name == FSharpUtils.FSharpMapTypeName)
             {
                 return true;
@@ -1055,7 +1065,7 @@ namespace Newtonsoft.Json.Serialization
         }
 #endif
 
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
         /// <summary>
         /// Creates a <see cref="JsonDynamicContract"/> for the given type.
         /// </summary>
@@ -1143,7 +1153,7 @@ namespace Newtonsoft.Json.Serialization
             }
 #endif
 
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
             if (typeof(IDynamicMetaObjectProvider).IsAssignableFrom(t))
             {
                 return CreateDynamicContract(objectType);
@@ -1526,7 +1536,7 @@ namespace Newtonsoft.Json.Serialization
                 return;
             }
 
-            Func<object, object> specifiedPropertyGet = JsonTypeReflector.ReflectionDelegateFactory.CreateGet<object>(specifiedMember);
+            var specifiedPropertyGet = JsonTypeReflector.ReflectionDelegateFactory.CreateGet<object>(specifiedMember);
 
             property.GetIsSpecified = o => (bool)specifiedPropertyGet(o);
 

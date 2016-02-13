@@ -128,12 +128,12 @@ namespace Newtonsoft.Json.Linq
         {
             if (name == null)
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentNullException("name");
             }
 
             if (name.Length == 0)
             {
-                throw new ArgumentException("Constructor name cannot be empty.", nameof(name));
+                throw new ArgumentException("Constructor name cannot be empty.", "name");
             }
 
             _name = name;
@@ -175,7 +175,7 @@ namespace Newtonsoft.Json.Linq
         {
             get
             {
-                ValidationUtils.ArgumentNotNull(key, nameof(key));
+                ValidationUtils.ArgumentNotNull(key, "key");
 
                 if (!(key is int))
                 {
@@ -186,7 +186,7 @@ namespace Newtonsoft.Json.Linq
             }
             set
             {
-                ValidationUtils.ArgumentNotNull(key, nameof(key));
+                ValidationUtils.ArgumentNotNull(key, "key");
 
                 if (!(key is int))
                 {

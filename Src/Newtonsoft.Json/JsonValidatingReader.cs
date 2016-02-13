@@ -25,7 +25,7 @@
 
 using System;
 using System.Collections.Generic;
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
 using System.Numerics;
 #endif
 using Newtonsoft.Json.Linq;
@@ -318,7 +318,7 @@ namespace Newtonsoft.Json
         /// <param name="reader">The <see cref="JsonReader"/> to read from while validating.</param>
         public JsonValidatingReader(JsonReader reader)
         {
-            ValidationUtils.ArgumentNotNull(reader, nameof(reader));
+            ValidationUtils.ArgumentNotNull(reader, "reader");
             _reader = reader;
             _stack = new Stack<SchemaScope>();
         }
@@ -840,7 +840,7 @@ namespace Newtonsoft.Json
             if (schema.DivisibleBy != null)
             {
                 bool notDivisible;
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
                 if (value is BigInteger)
                 {
                     // not that this will lose any decimal point on DivisibleBy

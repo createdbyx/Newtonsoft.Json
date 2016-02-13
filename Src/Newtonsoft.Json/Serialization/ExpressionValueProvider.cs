@@ -23,7 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-#if !(NET20 || NET35)
+#if !(NET20 || NET35 || UNITY_5)
 using System;
 using System.Collections.Generic;
 #if NET20
@@ -51,7 +51,7 @@ namespace Newtonsoft.Json.Serialization
         /// <param name="memberInfo">The member info.</param>
         public ExpressionValueProvider(MemberInfo memberInfo)
         {
-            ValidationUtils.ArgumentNotNull(memberInfo, nameof(memberInfo));
+            ValidationUtils.ArgumentNotNull(memberInfo, "memberInfo");
             _memberInfo = memberInfo;
         }
 

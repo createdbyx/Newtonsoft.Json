@@ -30,7 +30,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.IO;
 using System.Globalization;
-#if !(PORTABLE || PORTABLE40 || NET35 || NET20)
+#if !(PORTABLE || PORTABLE40 || NET35 || NET20 || UNITY_5)
 using System.Numerics;
 #endif
 using Newtonsoft.Json.Utilities;
@@ -80,7 +80,7 @@ namespace Newtonsoft.Json
         {
             if (reader == null)
             {
-                throw new ArgumentNullException(nameof(reader));
+                throw new ArgumentNullException("reader");
             }
 
             _reader = reader;
@@ -104,7 +104,7 @@ namespace Newtonsoft.Json
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException("value");
                 }
 
                 _arrayPool = value;
@@ -595,7 +595,7 @@ namespace Newtonsoft.Json
                                         return ReadDateTimeOffsetString((string)Value);
 #endif
                                     default:
-                                        throw new ArgumentOutOfRangeException(nameof(readType));
+                                        throw new ArgumentOutOfRangeException("readType");
                                 }
                             case '-':
                             case '.':
@@ -736,7 +736,7 @@ namespace Newtonsoft.Json
                             case '9':
                                 ParseNumber(ReadType.Read);
                                 bool b;
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
                                 if (Value is BigInteger)
                                 {
                                     b = (BigInteger)Value != 0;
@@ -855,7 +855,7 @@ namespace Newtonsoft.Json
                                     case ReadType.ReadAsDouble:
                                         return ReadDoubleString(_stringReference.ToString());
                                     default:
-                                        throw new ArgumentOutOfRangeException(nameof(readType));
+                                        throw new ArgumentOutOfRangeException("readType");
                                 }
                             case 'n':
                                 HandleNull();
@@ -1963,7 +1963,7 @@ namespace Newtonsoft.Json
                     }
                     else if (parseResult == ParseResult.Overflow)
                     {
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
                         string number = _stringReference.ToString();
 
                         if (number.Length > MaximumJavascriptIntegerCharacterLength)
@@ -2017,7 +2017,7 @@ namespace Newtonsoft.Json
             SetToken(numberType, numberValue, false);
         }
 
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
         // By using the BigInteger type in a separate method,
         // the runtime can execute the ParseNumber even if 
         // the System.Numerics.BigInteger.Parse method is

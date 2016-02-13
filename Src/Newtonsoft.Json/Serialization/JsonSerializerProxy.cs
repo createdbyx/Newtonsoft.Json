@@ -225,7 +225,7 @@ namespace Newtonsoft.Json.Serialization
 
         public JsonSerializerProxy(JsonSerializerInternalReader serializerReader)
         {
-            ValidationUtils.ArgumentNotNull(serializerReader, nameof(serializerReader));
+            ValidationUtils.ArgumentNotNull(serializerReader, "serializerReader");
 
             _serializerReader = serializerReader;
             _serializer = serializerReader.Serializer;
@@ -233,7 +233,7 @@ namespace Newtonsoft.Json.Serialization
 
         public JsonSerializerProxy(JsonSerializerInternalWriter serializerWriter)
         {
-            ValidationUtils.ArgumentNotNull(serializerWriter, nameof(serializerWriter));
+            ValidationUtils.ArgumentNotNull(serializerWriter, "serializerWriter");
 
             _serializerWriter = serializerWriter;
             _serializer = serializerWriter.Serializer;

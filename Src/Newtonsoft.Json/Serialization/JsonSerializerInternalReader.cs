@@ -27,13 +27,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
 using System.ComponentModel;
 using System.Dynamic;
 #endif
 using System.Diagnostics;
 using System.Globalization;
-#if !(PORTABLE || PORTABLE40 || NET35 || NET20)
+#if !(PORTABLE || PORTABLE40 || NET35 || NET20 || UNITY_5)
 using System.Numerics;
 #endif
 using System.Reflection;
@@ -65,7 +65,7 @@ namespace Newtonsoft.Json.Serialization
 
         public void Populate(JsonReader reader, object target)
         {
-            ValidationUtils.ArgumentNotNull(target, nameof(target));
+            ValidationUtils.ArgumentNotNull(target, "target");
 
             Type objectType = target.GetType();
 
@@ -137,7 +137,7 @@ namespace Newtonsoft.Json.Serialization
         {
             if (reader == null)
             {
-                throw new ArgumentNullException(nameof(reader));
+                throw new ArgumentNullException("reader");
             }
 
             JsonContract contract = GetContractSafe(objectType);
@@ -207,7 +207,7 @@ namespace Newtonsoft.Json.Serialization
 
         private JToken CreateJToken(JsonReader reader, JsonContract contract)
         {
-            ValidationUtils.ArgumentNotNull(reader, nameof(reader));
+            ValidationUtils.ArgumentNotNull(reader, "reader");
 
             if (contract != null)
             {
@@ -234,7 +234,7 @@ namespace Newtonsoft.Json.Serialization
 
         private JToken CreateJObject(JsonReader reader)
         {
-            ValidationUtils.ArgumentNotNull(reader, nameof(reader));
+            ValidationUtils.ArgumentNotNull(reader, "reader");
 
             // this is needed because we've already read inside the object, looking for metadata properties
             using (JTokenWriter writer = new JTokenWriter())
@@ -563,7 +563,7 @@ namespace Newtonsoft.Json.Serialization
 
                     return targetDictionary;
                 }
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
                 case JsonContractType.Dynamic:
                     JsonDynamicContract dynamicContract = (JsonDynamicContract)contract;
                     return CreateDynamic(reader, dynamicContract, member, id);
@@ -803,7 +803,7 @@ namespace Newtonsoft.Json.Serialization
                 }
 
                 if (objectType != null
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
                     && objectType != typeof(IDynamicMetaObjectProvider)
 #endif
                     && !objectType.IsAssignableFrom(specifiedType))
@@ -926,7 +926,7 @@ namespace Newtonsoft.Json.Serialization
         private bool HasNoDefinedType(JsonContract contract)
         {
             return (contract == null || contract.UnderlyingType == typeof(object) || contract.ContractType == JsonContractType.Linq
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
                     || contract.UnderlyingType == typeof(IDynamicMetaObjectProvider)
 #endif
                 );
@@ -968,7 +968,7 @@ namespace Newtonsoft.Json.Serialization
                             }
                         }
 
-#if !(PORTABLE || PORTABLE40 || NET35 || NET20)
+#if !(PORTABLE || PORTABLE40 || NET35 || NET20 || UNITY_5)
                         if (value is BigInteger)
                         {
                             return ConvertUtils.FromBigInteger((BigInteger)value, contract.NonNullableUnderlyingType);
@@ -1760,7 +1760,7 @@ namespace Newtonsoft.Json.Serialization
         }
 #endif
 
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
         private object CreateDynamic(JsonReader reader, JsonDynamicContract contract, JsonProperty member, string id)
         {
             IDynamicMetaObjectProvider newObject;
@@ -1884,7 +1884,7 @@ namespace Newtonsoft.Json.Serialization
 
         private object CreateObjectUsingCreatorWithParameters(JsonReader reader, JsonObjectContract contract, JsonProperty containerProperty, ObjectConstructor<object> creator, string id)
         {
-            ValidationUtils.ArgumentNotNull(creator, nameof(creator));
+            ValidationUtils.ArgumentNotNull(creator, "creator");
 
             // only need to keep a track of properies presence if they are required or a value should be defaulted if missing
             bool trackPresence = (contract.HasRequiredOrDefaultValueProperties || HasFlag(Serializer._defaultValueHandling, DefaultValueHandling.Populate));

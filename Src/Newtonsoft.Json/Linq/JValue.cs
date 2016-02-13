@@ -27,11 +27,11 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Utilities;
 using System.Globalization;
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
 using System.Dynamic;
 using System.Linq.Expressions;
 #endif
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
 using System.Numerics;
 
 #endif
@@ -95,7 +95,9 @@ namespace Newtonsoft.Json.Linq
         /// Initializes a new instance of the <see cref="JValue"/> class with the given value.
         /// </summary>
         /// <param name="value">The value.</param>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public JValue(ulong value)
             : this(value, JTokenType.Integer)
         {
@@ -219,7 +221,7 @@ namespace Newtonsoft.Json.Linq
             get { return false; }
         }
 
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
         private static int CompareBigInteger(BigInteger i1, object i2)
         {
             int result = i1.CompareTo(ConvertUtils.ToBigInteger(i2));
@@ -264,7 +266,7 @@ namespace Newtonsoft.Json.Linq
             switch (valueType)
             {
                 case JTokenType.Integer:
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
                     if (objA is BigInteger)
                     {
                         return CompareBigInteger((BigInteger)objA, objB);
@@ -287,7 +289,7 @@ namespace Newtonsoft.Json.Linq
                         return Convert.ToInt64(objA, CultureInfo.InvariantCulture).CompareTo(Convert.ToInt64(objB, CultureInfo.InvariantCulture));
                     }
                 case JTokenType.Float:
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
                     if (objA is BigInteger)
                     {
                         return CompareBigInteger((BigInteger)objA, objB);
@@ -416,7 +418,7 @@ namespace Newtonsoft.Json.Linq
             return d1.CompareTo(d2);
         }
 
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
         private static bool Operation(ExpressionType operation, object objA, object objB, out object result)
         {
             if (objA is string || objB is string)
@@ -632,7 +634,7 @@ namespace Newtonsoft.Json.Linq
             {
                 return JTokenType.Integer;
             }
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
             else if (value is BigInteger)
             {
                 return JTokenType.Integer;
@@ -768,7 +770,7 @@ namespace Newtonsoft.Json.Linq
                     {
                         writer.WriteValue((ulong)_value);
                     }
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
                     else if (_value is BigInteger)
                     {
                         writer.WriteValue((BigInteger)_value);
@@ -968,7 +970,7 @@ namespace Newtonsoft.Json.Linq
             }
         }
 
-#if !(NET35 || NET20 || PORTABLE40)
+#if !(NET35 || NET20 || PORTABLE40 || UNITY_5)
         /// <summary>
         /// Returns the <see cref="T:System.Dynamic.DynamicMetaObject"/> responsible for binding operations performed on this object.
         /// </summary>

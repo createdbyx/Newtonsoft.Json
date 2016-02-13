@@ -56,7 +56,7 @@ namespace Newtonsoft.Json.Serialization
 
         protected JsonSerializerInternalBase(JsonSerializer serializer)
         {
-            ValidationUtils.ArgumentNotNull(serializer, nameof(serializer));
+            ValidationUtils.ArgumentNotNull(serializer, "serializer");
 
             Serializer = serializer;
             TraceWriter = serializer.TraceWriter;

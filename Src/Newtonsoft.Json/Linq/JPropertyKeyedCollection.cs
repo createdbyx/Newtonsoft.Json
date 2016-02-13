@@ -77,7 +77,7 @@ namespace Newtonsoft.Json.Linq
         {
             if (key == null)
             {
-                throw new ArgumentNullException(nameof(key));
+                throw new ArgumentNullException("key");
             }
 
             if (_dictionary != null)
@@ -123,7 +123,7 @@ namespace Newtonsoft.Json.Linq
         {
             if (key == null)
             {
-                throw new ArgumentNullException(nameof(key));
+                throw new ArgumentNullException("key");
             }
 
             if (_dictionary != null)
@@ -179,7 +179,7 @@ namespace Newtonsoft.Json.Linq
             {
                 if (key == null)
                 {
-                    throw new ArgumentNullException(nameof(key));
+                    throw new ArgumentNullException("key");
                 }
 
                 if (_dictionary != null)

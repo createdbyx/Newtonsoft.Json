@@ -51,7 +51,7 @@ namespace Newtonsoft.Json.Utilities
 
         public static TimeSpan GetUtcOffset(this DateTime d)
         {
-#if NET20
+#if NET20 || UNITY_5
             return TimeZone.CurrentTimeZone.GetUtcOffset(d);
 #else
             return TimeZoneInfo.Local.GetUtcOffset(d);
@@ -634,7 +634,7 @@ namespace Newtonsoft.Json.Utilities
 
             if (format == DateFormatHandling.MicrosoftDateFormat)
             {
-                TimeSpan o = offset ?? value.GetUtcOffset();
+                var o = offset.HasValue ? offset.Value : value.GetUtcOffset();
 
                 long javaScriptTicks = ConvertDateTimeToJavaScriptTicks(value, o);
 
@@ -668,7 +668,7 @@ namespace Newtonsoft.Json.Utilities
                 switch (kind)
                 {
                     case DateTimeKind.Local:
-                        pos = WriteDateTimeOffset(chars, pos, offset ?? value.GetUtcOffset(), format);
+                        pos = WriteDateTimeOffset(chars, pos, offset.HasValue ? offset.Value : value.GetUtcOffset(), format);
                         break;
                     case DateTimeKind.Utc:
                         chars[pos++] = 'Z';

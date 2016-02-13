@@ -25,7 +25,7 @@
 
 using System;
 using System.Globalization;
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
 using System.Numerics;
 #endif
 using Newtonsoft.Json.Utilities;
@@ -74,7 +74,7 @@ namespace Newtonsoft.Json.Linq
         /// <param name="container">The container being written to.</param>
         public JTokenWriter(JContainer container)
         {
-            ValidationUtils.ArgumentNotNull(container, nameof(container));
+            ValidationUtils.ArgumentNotNull(container, "container");
 
             _token = container;
             _parent = container;
@@ -221,7 +221,7 @@ namespace Newtonsoft.Json.Linq
         /// <param name="value">The <see cref="Object"/> value to write.</param>
         public override void WriteValue(object value)
         {
-#if !(NET20 || NET35 || PORTABLE || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE || PORTABLE40 || UNITY_5)
             if (value is BigInteger)
             {
                 InternalWriteValue(JsonToken.Integer);
@@ -296,7 +296,9 @@ namespace Newtonsoft.Json.Linq
         /// Writes a <see cref="UInt32"/> value.
         /// </summary>
         /// <param name="value">The <see cref="UInt32"/> value to write.</param>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public override void WriteValue(uint value)
         {
             base.WriteValue(value);
@@ -317,7 +319,9 @@ namespace Newtonsoft.Json.Linq
         /// Writes a <see cref="UInt64"/> value.
         /// </summary>
         /// <param name="value">The <see cref="UInt64"/> value to write.</param>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public override void WriteValue(ulong value)
         {
             base.WriteValue(value);
@@ -368,7 +372,9 @@ namespace Newtonsoft.Json.Linq
         /// Writes a <see cref="UInt16"/> value.
         /// </summary>
         /// <param name="value">The <see cref="UInt16"/> value to write.</param>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public override void WriteValue(ushort value)
         {
             base.WriteValue(value);
@@ -405,7 +411,9 @@ namespace Newtonsoft.Json.Linq
         /// Writes a <see cref="SByte"/> value.
         /// </summary>
         /// <param name="value">The <see cref="SByte"/> value to write.</param>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public override void WriteValue(sbyte value)
         {
             base.WriteValue(value);

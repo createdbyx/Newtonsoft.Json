@@ -27,7 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.ComponentModel;
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
 using System.Numerics;
 #endif
 using System.Text;
@@ -37,7 +37,7 @@ using System.Reflection;
 #if NET20
 using Newtonsoft.Json.Utilities.LinqBridge;
 #endif
-#if !(DOTNET || PORTABLE40 || PORTABLE)
+#if !(DOTNET || PORTABLE40 || PORTABLE || UNITY_5)
 using System.Data.SqlTypes;
 
 #endif
@@ -145,7 +145,7 @@ namespace Newtonsoft.Json.Utilities
                 { typeof(Guid?), PrimitiveTypeCode.GuidNullable },
                 { typeof(TimeSpan), PrimitiveTypeCode.TimeSpan },
                 { typeof(TimeSpan?), PrimitiveTypeCode.TimeSpanNullable },
-#if !(PORTABLE || PORTABLE40 || NET35 || NET20)
+#if !(PORTABLE || PORTABLE40 || NET35 || NET20 || UNITY_5)
                 { typeof(BigInteger), PrimitiveTypeCode.BigInteger },
                 { typeof(BigInteger?), PrimitiveTypeCode.BigIntegerNullable },
 #endif
@@ -241,7 +241,7 @@ namespace Newtonsoft.Json.Utilities
 
         public static TimeSpan ParseTimeSpan(string input)
         {
-#if !(NET35 || NET20)
+#if !(NET35 || NET20 || UNITY_5)
             return TimeSpan.Parse(input, CultureInfo.InvariantCulture);
 #else
             return TimeSpan.Parse(input);
@@ -311,7 +311,7 @@ namespace Newtonsoft.Json.Utilities
             return o => call(null, o);
         }
 
-#if !(NET20 || NET35 || PORTABLE || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE || PORTABLE40 || UNITY_5)
         internal static BigInteger ToBigInteger(object value)
         {
             if (value is BigInteger)
@@ -411,7 +411,7 @@ namespace Newtonsoft.Json.Utilities
                 case ConvertResult.CannotConvertNull:
                     throw new Exception("Can not convert null {0} into non-nullable {1}.".FormatWith(CultureInfo.InvariantCulture, initialValue.GetType(), targetType));
                 case ConvertResult.NotInstantiableType:
-                    throw new ArgumentException("Target type {0} is not a value type or a non-abstract class.".FormatWith(CultureInfo.InvariantCulture, targetType), nameof(targetType));
+                    throw new ArgumentException("Target type {0} is not a value type or a non-abstract class.".FormatWith(CultureInfo.InvariantCulture, targetType), "targetType");
                 case ConvertResult.NoValidConversion:
                     throw new InvalidOperationException("Can not convert from {0} to {1}.".FormatWith(CultureInfo.InvariantCulture, initialValue.GetType(), targetType));
                 default:
@@ -442,7 +442,7 @@ namespace Newtonsoft.Json.Utilities
         {
             if (initialValue == null)
             {
-                throw new ArgumentNullException(nameof(initialValue));
+                throw new ArgumentNullException("initialValue");
             }
 
             if (ReflectionUtils.IsNullableType(targetType))
@@ -540,7 +540,7 @@ namespace Newtonsoft.Json.Utilities
                 }
             }
 
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
             if (targetType == typeof(BigInteger))
             {
                 value = ToBigInteger(initialValue);
@@ -586,7 +586,7 @@ namespace Newtonsoft.Json.Utilities
                 return ConvertResult.CannotConvertNull;
             }
 #endif
-#if !(DOTNET || PORTABLE40 || PORTABLE)
+#if !(DOTNET || PORTABLE40 || PORTABLE || UNITY_5)
             if (initialValue is INullable)
             {
                 value = EnsureTypeAssignable(ToValue((INullable)initialValue), initialType, targetType);
@@ -651,7 +651,7 @@ namespace Newtonsoft.Json.Utilities
                     return value;
                 }
 
-                Func<object, object> castConverter = CastConverters.Get(new TypeConvertKey(valueType, targetType));
+                var castConverter = CastConverters.Get(new TypeConvertKey(valueType, targetType));
                 if (castConverter != null)
                 {
                     return castConverter(value);
@@ -668,7 +668,7 @@ namespace Newtonsoft.Json.Utilities
             throw new ArgumentException("Could not cast or convert from {0} to {1}.".FormatWith(CultureInfo.InvariantCulture, (initialType != null) ? initialType.ToString() : "{null}", targetType));
         }
 
-#if !(DOTNET || PORTABLE40 || PORTABLE)
+#if !(DOTNET || PORTABLE40 || PORTABLE || UNITY_5)
         public static object ToValue(INullable nullableValue)
         {
             if (nullableValue == null)
@@ -709,7 +709,7 @@ namespace Newtonsoft.Json.Utilities
 
         public static bool VersionTryParse(string input, out Version result)
         {
-#if !(NET20 || NET35)
+#if !(NET20 || NET35 || UNITY_5)
             return Version.TryParse(input, out result);
 #else
     // improve failure performance with regex?
@@ -933,7 +933,7 @@ namespace Newtonsoft.Json.Utilities
         public static bool TryConvertGuid(string s, out Guid g)
         {
             // GUID has to have format 00000000-0000-0000-0000-000000000000
-#if NET20 || NET35
+#if NET20 || NET35 || UNITY_5
             if (s == null)
             {
                 throw new ArgumentNullException("s");

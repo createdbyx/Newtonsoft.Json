@@ -394,8 +394,10 @@ namespace Newtonsoft.Json.Serialization
                     {
                         new ReflectionPermission(ReflectionPermissionFlag.MemberAccess).Demand();
                         new ReflectionPermission(ReflectionPermissionFlag.RestrictedMemberAccess).Demand();
+#if !UNITY_5
                         new SecurityPermission(SecurityPermissionFlag.SkipVerification).Demand();
                         new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Demand();
+#endif
                         new SecurityPermission(PermissionState.Unrestricted).Demand();
                         _dynamicCodeGeneration = true;
                     }
@@ -420,7 +422,7 @@ namespace Newtonsoft.Json.Serialization
                 {
 #if (DOTNET || PORTABLE || PORTABLE40)
                     _fullyTrusted = false;
-#elif !(NET20 || NET35 || PORTABLE40)
+#elif !(NET20 || NET35 || PORTABLE40 || UNITY_5)
                     AppDomain appDomain = AppDomain.CurrentDomain;
 
                     _fullyTrusted = appDomain.IsHomogenous && appDomain.IsFullyTrusted;

@@ -25,12 +25,12 @@
 
 using System;
 using System.Collections.Generic;
-#if NET20
+#if NET20 
 using Newtonsoft.Json.Utilities.LinqBridge;
 #endif
 using System.Threading;
 using Newtonsoft.Json.Serialization;
-
+                    
 namespace Newtonsoft.Json.Utilities
 {
     internal class ThreadSafeStore<TKey, TValue>
@@ -43,7 +43,7 @@ namespace Newtonsoft.Json.Utilities
         {
             if (creator == null)
             {
-                throw new ArgumentNullException(nameof(creator));
+              throw new ArgumentNullException("creator");
             }
 
             _creator = creator;

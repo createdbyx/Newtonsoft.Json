@@ -33,7 +33,7 @@ using Newtonsoft.Json.Utilities;
 using System.Collections;
 using System.Globalization;
 using System.ComponentModel;
-#if NET20
+#if NET20 || UNITY_5
 using Newtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;
@@ -50,7 +50,7 @@ namespace Newtonsoft.Json.Linq
         , ITypedList, IBindingList
 #endif
         , IList
-#if !(NET20 || NET35 || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE40 || UNITY_5)
         , INotifyCollectionChanged
 #endif
     {
@@ -76,7 +76,7 @@ namespace Newtonsoft.Json.Linq
             remove { _addingNew -= value; }
         }
 #endif
-#if !(NET20 || NET35 || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE40 || UNITY_5)
         internal NotifyCollectionChangedEventHandler _collectionChanged;
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Newtonsoft.Json.Linq
         internal JContainer(JContainer other)
             : this()
         {
-            ValidationUtils.ArgumentNotNull(other, nameof(other));
+            ValidationUtils.ArgumentNotNull(other, "other");
 
             int i = 0;
             foreach (JToken child in other)
@@ -168,7 +168,7 @@ namespace Newtonsoft.Json.Linq
             }
         }
 #endif
-#if !(NET20 || NET35 || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE40 || UNITY_5)
         /// <summary>
         /// Raises the <see cref="CollectionChanged"/> event.
         /// </summary>
@@ -382,7 +382,7 @@ namespace Newtonsoft.Json.Linq
 
             if (index > children.Count)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), "Index must be within the bounds of the List.");
+                throw new ArgumentOutOfRangeException("index", "Index must be within the bounds of the List.");
             }
 
             CheckReentrancy();
@@ -417,7 +417,7 @@ namespace Newtonsoft.Json.Linq
                 OnListChanged(new ListChangedEventArgs(ListChangedType.ItemAdded, index));
             }
 #endif
-#if !(NET20 || NET35 || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE40 || UNITY_5)
             if (_collectionChanged != null)
             {
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, index));
@@ -431,11 +431,11 @@ namespace Newtonsoft.Json.Linq
 
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), "Index is less than 0.");
+                throw new ArgumentOutOfRangeException("index", "Index is less than 0.");
             }
             if (index >= children.Count)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), "Index is equal to or greater than Count.");
+                throw new ArgumentOutOfRangeException("index", "Index is equal to or greater than Count.");
             }
 
             CheckReentrancy();
@@ -465,7 +465,7 @@ namespace Newtonsoft.Json.Linq
                 OnListChanged(new ListChangedEventArgs(ListChangedType.ItemDeleted, index));
             }
 #endif
-#if !(NET20 || NET35 || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE40 || UNITY_5)
             if (_collectionChanged != null)
             {
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
@@ -496,11 +496,11 @@ namespace Newtonsoft.Json.Linq
 
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), "Index is less than 0.");
+                throw new ArgumentOutOfRangeException("index", "Index is less than 0.");
             }
             if (index >= children.Count)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), "Index is equal to or greater than Count.");
+                throw new ArgumentOutOfRangeException("index", "Index is equal to or greater than Count.");
             }
 
             JToken existing = children[index];
@@ -545,7 +545,7 @@ namespace Newtonsoft.Json.Linq
                 OnListChanged(new ListChangedEventArgs(ListChangedType.ItemChanged, index));
             }
 #endif
-#if !(NET20 || NET35 || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE40 || UNITY_5)
             if (_collectionChanged != null)
             {
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, item, existing, index));
@@ -574,7 +574,7 @@ namespace Newtonsoft.Json.Linq
                 OnListChanged(new ListChangedEventArgs(ListChangedType.Reset, -1));
             }
 #endif
-#if !(NET20 || NET35 || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE40 || UNITY_5)
             if (_collectionChanged != null)
             {
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
@@ -602,11 +602,11 @@ namespace Newtonsoft.Json.Linq
         {
             if (array == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException("array");
             }
             if (arrayIndex < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(arrayIndex), "arrayIndex is less than 0.");
+                throw new ArgumentOutOfRangeException("arrayIndex", "arrayIndex is less than 0.");
             }
             if (arrayIndex >= array.Length && arrayIndex != 0)
             {
@@ -644,7 +644,7 @@ namespace Newtonsoft.Json.Linq
 
         internal virtual void ValidateToken(JToken o, JToken existing)
         {
-            ValidationUtils.ArgumentNotNull(o, nameof(o));
+            ValidationUtils.ArgumentNotNull(o, "o");
 
             if (o.Type == JTokenType.Property)
             {
@@ -775,7 +775,7 @@ namespace Newtonsoft.Json.Linq
 
         internal void ReadContentFrom(JsonReader r, JsonLoadSettings settings)
         {
-            ValidationUtils.ArgumentNotNull(r, nameof(r));
+            ValidationUtils.ArgumentNotNull(r, "r");
             IJsonLineInfo lineInfo = r as IJsonLineInfo;
 
             JContainer parent = this;
@@ -1249,8 +1249,50 @@ namespace Newtonsoft.Json.Linq
                     }
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(settings), "Unexpected merge array handling when merging JSON.");
+                    throw new ArgumentOutOfRangeException("settings", "Unexpected merge array handling when merging JSON.");
             }
         }
     }
 }
+
+#if UNITY_5   
+namespace System.ComponentModel
+{
+    /// <summary>Represents the method that will handle the <see cref="E:System.Windows.Forms.BindingSource.AddingNew" /> event.</summary>
+    /// <param name="sender">The source of the event, typically a data container or data-bound collection. </param>
+    /// <param name="e">A <see cref="T:System.ComponentModel.AddingNewEventArgs" /> that contains the event data. </param>
+    public delegate void AddingNewEventHandler(object sender, AddingNewEventArgs e);
+    
+    /// <summary>Provides data for the <see cref="E:System.Windows.Forms.BindingSource.AddingNew" /> event.</summary>
+    public class AddingNewEventArgs : EventArgs
+    {
+        private object newObject;
+
+        /// <summary>Gets or sets the object to be added to the binding list. </summary>
+        /// <returns>The <see cref="T:System.Object" /> to be added as a new item to the associated collection. </returns>
+        public object NewObject
+        {
+            get
+            {
+                return this.newObject;
+            }
+            set
+            {
+                this.newObject = value;
+            }
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="T:System.ComponentModel.AddingNewEventArgs" /> class using no parameters.</summary>
+        public AddingNewEventArgs()
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="T:System.ComponentModel.AddingNewEventArgs" /> class using the specified object as the new item.</summary>
+        /// <param name="newObject">An <see cref="T:System.Object" /> to use as the new item value.</param>
+        public AddingNewEventArgs(object newObject)
+        {
+            this.newObject = newObject;
+        }
+    }
+} 
+#endif

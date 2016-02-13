@@ -29,7 +29,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Globalization;
-#if NET20
+#if NET20 
 using Newtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;
@@ -91,7 +91,7 @@ namespace Newtonsoft.Json.Utilities
             {
                 if (ReflectionUtils.HasDefaultConstructor(t, false))
                 {
-                    Func<object> ctor = delegateFactory.CreateDefaultConstructor<object>(t);
+                   var ctor = delegateFactory.CreateDefaultConstructor<object>(t);
 
                     d.Creator = args => ctor();
                 }

@@ -26,7 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
 using System.Numerics;
 #endif
 using System.Text;
@@ -75,7 +75,7 @@ namespace Newtonsoft.Json
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException("value");
                 }
 
                 _arrayPool = value;
@@ -149,9 +149,7 @@ namespace Newtonsoft.Json
         public JsonTextWriter(TextWriter textWriter)
         {
             if (textWriter == null)
-            {
-                throw new ArgumentNullException(nameof(textWriter));
-            }
+                throw new ArgumentNullException("textWriter");
 
             _writer = textWriter;
             _quoteChar = '"';
@@ -359,7 +357,7 @@ namespace Newtonsoft.Json
         /// <param name="value">The <see cref="Object"/> value to write.</param>
         public override void WriteValue(object value)
         {
-#if !(NET20 || NET35 || PORTABLE || PORTABLE40)
+#if !(NET20 || NET35 || PORTABLE || PORTABLE40 || UNITY_5)
             if (value is BigInteger)
             {
                 InternalWriteValue(JsonToken.Integer);
@@ -439,7 +437,9 @@ namespace Newtonsoft.Json
         /// Writes a <see cref="UInt32"/> value.
         /// </summary>
         /// <param name="value">The <see cref="UInt32"/> value to write.</param>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public override void WriteValue(uint value)
         {
             InternalWriteValue(JsonToken.Integer);
@@ -460,7 +460,9 @@ namespace Newtonsoft.Json
         /// Writes a <see cref="UInt64"/> value.
         /// </summary>
         /// <param name="value">The <see cref="UInt64"/> value to write.</param>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public override void WriteValue(ulong value)
         {
             InternalWriteValue(JsonToken.Integer);
@@ -545,7 +547,9 @@ namespace Newtonsoft.Json
         /// Writes a <see cref="UInt16"/> value.
         /// </summary>
         /// <param name="value">The <see cref="UInt16"/> value to write.</param>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public override void WriteValue(ushort value)
         {
             InternalWriteValue(JsonToken.Integer);
@@ -576,7 +580,9 @@ namespace Newtonsoft.Json
         /// Writes a <see cref="SByte"/> value.
         /// </summary>
         /// <param name="value">The <see cref="SByte"/> value to write.</param>
+#if !UNITY_5
         [CLSCompliant(false)]
+#endif
         public override void WriteValue(sbyte value)
         {
             InternalWriteValue(JsonToken.Integer);
@@ -700,7 +706,7 @@ namespace Newtonsoft.Json
             InternalWriteValue(JsonToken.String);
 
             string text;
-#if (NET35 || NET20)
+#if (NET35 || NET20 || UNITY_5)
             text = value.ToString();
 #else
             text = value.ToString(null, CultureInfo.InvariantCulture);

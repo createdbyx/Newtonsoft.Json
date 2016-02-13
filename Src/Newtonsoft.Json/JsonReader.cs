@@ -27,7 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Globalization;
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
 using System.Numerics;
 #endif
 using Newtonsoft.Json.Serialization;
@@ -178,7 +178,7 @@ namespace Newtonsoft.Json
             {
                 if (value < DateTimeZoneHandling.Local || value > DateTimeZoneHandling.RoundtripKind)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value));
+                    throw new ArgumentOutOfRangeException("value");
                 }
 
                 _dateTimeZoneHandling = value;
@@ -201,7 +201,7 @@ namespace Newtonsoft.Json
 #endif
                     )
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value));
+                    throw new ArgumentOutOfRangeException("value");
                 }
 
                 _dateParseHandling = value;
@@ -218,7 +218,7 @@ namespace Newtonsoft.Json
             {
                 if (value < FloatParseHandling.Double || value > FloatParseHandling.Decimal)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value));
+                    throw new ArgumentOutOfRangeException("value");
                 }
 
                 _floatParseHandling = value;
@@ -244,7 +244,7 @@ namespace Newtonsoft.Json
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentException("Value must be positive.", nameof(value));
+                    throw new ArgumentException("Value must be positive.", "value");
                 }
 
                 _maxDepth = value;
@@ -671,7 +671,7 @@ namespace Newtonsoft.Json
                 case JsonToken.Integer:
                 case JsonToken.Float:
                     bool b;
-#if !(NET20 || NET35 || PORTABLE40 || PORTABLE)
+#if !(NET20 || NET35 || PORTABLE40 || PORTABLE || UNITY_5)
                     if (Value is BigInteger)
                     {
                         b = (BigInteger)Value != 0;

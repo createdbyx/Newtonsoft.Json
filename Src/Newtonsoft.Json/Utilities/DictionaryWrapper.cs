@@ -46,29 +46,29 @@ namespace Newtonsoft.Json.Utilities
     {
         private readonly IDictionary _dictionary;
         private readonly IDictionary<TKey, TValue> _genericDictionary;
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
         private readonly IReadOnlyDictionary<TKey, TValue> _readOnlyDictionary;
 #endif
         private object _syncRoot;
 
         public DictionaryWrapper(IDictionary dictionary)
         {
-            ValidationUtils.ArgumentNotNull(dictionary, nameof(dictionary));
+            ValidationUtils.ArgumentNotNull(dictionary, "dictionary");
 
             _dictionary = dictionary;
         }
 
         public DictionaryWrapper(IDictionary<TKey, TValue> dictionary)
         {
-            ValidationUtils.ArgumentNotNull(dictionary, nameof(dictionary));
+            ValidationUtils.ArgumentNotNull(dictionary, "dictionary");
 
             _genericDictionary = dictionary;
         }
 
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
         public DictionaryWrapper(IReadOnlyDictionary<TKey, TValue> dictionary)
         {
-            ValidationUtils.ArgumentNotNull(dictionary, nameof(dictionary));
+            ValidationUtils.ArgumentNotNull(dictionary, "dictionary");
 
             _readOnlyDictionary = dictionary;
         }
@@ -95,8 +95,8 @@ namespace Newtonsoft.Json.Utilities
             if (_dictionary != null)
             {
                 return _dictionary.Contains(key);
-            }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             else if (_readOnlyDictionary != null)
             {
                 return _readOnlyDictionary.ContainsKey(key);
@@ -115,8 +115,8 @@ namespace Newtonsoft.Json.Utilities
                 if (_dictionary != null)
                 {
                     return _dictionary.Keys.Cast<TKey>().ToList();
-                }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                    }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
                 else if (_readOnlyDictionary != null)
                 {
                     return _readOnlyDictionary.Keys.ToList();
@@ -143,7 +143,7 @@ namespace Newtonsoft.Json.Utilities
                     return false;
                 }
             }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             else if (_readOnlyDictionary != null)
             {
                 throw new NotSupportedException();
@@ -170,7 +170,7 @@ namespace Newtonsoft.Json.Utilities
                     return true;
                 }
             }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             else if (_readOnlyDictionary != null)
             {
                 throw new NotSupportedException();
@@ -189,8 +189,8 @@ namespace Newtonsoft.Json.Utilities
                 if (_dictionary != null)
                 {
                     return _dictionary.Values.Cast<TValue>().ToList();
-                }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                    }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
                 else if (_readOnlyDictionary != null)
                 {
                     return _readOnlyDictionary.Values.ToList();
@@ -210,8 +210,8 @@ namespace Newtonsoft.Json.Utilities
                 if (_dictionary != null)
                 {
                     return (TValue)_dictionary[key];
-                }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                    }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
                 else if (_readOnlyDictionary != null)
                 {
                     return _readOnlyDictionary[key];
@@ -227,8 +227,8 @@ namespace Newtonsoft.Json.Utilities
                 if (_dictionary != null)
                 {
                     _dictionary[key] = value;
-                }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                    }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
                 else if (_readOnlyDictionary != null)
                 {
                     throw new NotSupportedException();
@@ -246,8 +246,8 @@ namespace Newtonsoft.Json.Utilities
             if (_dictionary != null)
             {
                 ((IList)_dictionary).Add(item);
-            }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             else if (_readOnlyDictionary != null)
             {
                 throw new NotSupportedException();
@@ -264,8 +264,8 @@ namespace Newtonsoft.Json.Utilities
             if (_dictionary != null)
             {
                 _dictionary.Clear();
-            }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             else if (_readOnlyDictionary != null)
             {
                 throw new NotSupportedException();
@@ -282,8 +282,8 @@ namespace Newtonsoft.Json.Utilities
             if (_dictionary != null)
             {
                 return ((IList)_dictionary).Contains(item);
-            }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             else if (_readOnlyDictionary != null)
             {
                 return _readOnlyDictionary.Contains(item);
@@ -304,7 +304,7 @@ namespace Newtonsoft.Json.Utilities
                     array[arrayIndex++] = new KeyValuePair<TKey, TValue>((TKey)item.Key, (TValue)item.Value);
                 }
             }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             else if (_readOnlyDictionary != null)
             {
                 throw new NotSupportedException();
@@ -323,8 +323,8 @@ namespace Newtonsoft.Json.Utilities
                 if (_dictionary != null)
                 {
                     return _dictionary.Count;
-                }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                    }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
                 else if (_readOnlyDictionary != null)
                 {
                     return _readOnlyDictionary.Count;
@@ -344,8 +344,8 @@ namespace Newtonsoft.Json.Utilities
                 if (_dictionary != null)
                 {
                     return _dictionary.IsReadOnly;
-                }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                    }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
                 else if (_readOnlyDictionary != null)
                 {
                     return true;
@@ -381,7 +381,7 @@ namespace Newtonsoft.Json.Utilities
                     return true;
                 }
             }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             else if (_readOnlyDictionary != null)
             {
                 throw new NotSupportedException();
@@ -398,8 +398,8 @@ namespace Newtonsoft.Json.Utilities
             if (_dictionary != null)
             {
                 return _dictionary.Cast<DictionaryEntry>().Select(de => new KeyValuePair<TKey, TValue>((TKey)de.Key, (TValue)de.Value)).GetEnumerator();
-            }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+}
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             else if (_readOnlyDictionary != null)
             {
                 return _readOnlyDictionary.GetEnumerator();
@@ -421,8 +421,8 @@ namespace Newtonsoft.Json.Utilities
             if (_dictionary != null)
             {
                 _dictionary.Add(key, value);
-            }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             else if (_readOnlyDictionary != null)
             {
                 throw new NotSupportedException();
@@ -441,8 +441,8 @@ namespace Newtonsoft.Json.Utilities
                 if (_dictionary != null)
                 {
                     return _dictionary[key];
-                }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                    }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
                 else if (_readOnlyDictionary != null)
                 {
                     return _readOnlyDictionary[(TKey)key];
@@ -458,8 +458,8 @@ namespace Newtonsoft.Json.Utilities
                 if (_dictionary != null)
                 {
                     _dictionary[key] = value;
-                }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                    }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
                 else if (_readOnlyDictionary != null)
                 {
                     throw new NotSupportedException();
@@ -478,7 +478,7 @@ namespace Newtonsoft.Json.Utilities
 
             public DictionaryEnumerator(IEnumerator<KeyValuePair<TEnumeratorKey, TEnumeratorValue>> e)
             {
-                ValidationUtils.ArgumentNotNull(e, nameof(e));
+                ValidationUtils.ArgumentNotNull(e, "e");
                 _e = e;
             }
 
@@ -518,8 +518,8 @@ namespace Newtonsoft.Json.Utilities
             if (_dictionary != null)
             {
                 return _dictionary.GetEnumerator();
-            }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             else if (_readOnlyDictionary != null)
             {
                 return new DictionaryEnumerator<TKey, TValue>(_readOnlyDictionary.GetEnumerator());
@@ -536,8 +536,8 @@ namespace Newtonsoft.Json.Utilities
             if (_genericDictionary != null)
             {
                 return _genericDictionary.ContainsKey((TKey)key);
-            }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             else if (_readOnlyDictionary != null)
             {
                 return _readOnlyDictionary.ContainsKey((TKey)key);
@@ -556,8 +556,8 @@ namespace Newtonsoft.Json.Utilities
                 if (_genericDictionary != null)
                 {
                     return false;
-                }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                    }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
                 else if (_readOnlyDictionary != null)
                 {
                     return true;
@@ -577,8 +577,8 @@ namespace Newtonsoft.Json.Utilities
                 if (_genericDictionary != null)
                 {
                     return _genericDictionary.Keys.ToList();
-                }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                    }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
                 else if (_readOnlyDictionary != null)
                 {
                     return _readOnlyDictionary.Keys.ToList();
@@ -596,8 +596,8 @@ namespace Newtonsoft.Json.Utilities
             if (_dictionary != null)
             {
                 _dictionary.Remove(key);
-            }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             else if (_readOnlyDictionary != null)
             {
                 throw new NotSupportedException();
@@ -616,8 +616,8 @@ namespace Newtonsoft.Json.Utilities
                 if (_genericDictionary != null)
                 {
                     return _genericDictionary.Values.ToList();
-                }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                    }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
                 else if (_readOnlyDictionary != null)
                 {
                     return _readOnlyDictionary.Values.ToList();
@@ -635,8 +635,8 @@ namespace Newtonsoft.Json.Utilities
             if (_dictionary != null)
             {
                 _dictionary.CopyTo(array, index);
-            }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
             else if (_readOnlyDictionary != null)
             {
                 throw new NotSupportedException();
@@ -683,8 +683,8 @@ namespace Newtonsoft.Json.Utilities
                 if (_dictionary != null)
                 {
                     return _dictionary;
-                }
-#if !(NET40 || NET35 || NET20 || PORTABLE40)
+                    }
+#if !(NET40 || NET35 || NET20 || PORTABLE40 || UNITY_5)
                 else if (_readOnlyDictionary != null)
                 {
                     return _readOnlyDictionary;

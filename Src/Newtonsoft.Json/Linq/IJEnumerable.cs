@@ -32,7 +32,7 @@ namespace Newtonsoft.Json.Linq
     /// </summary>
     /// <typeparam name="T">The type of token</typeparam>
     public interface IJEnumerable<
-#if !(NET20 || NET35)
+#if !(NET20 || NET35 || UNITY_5)
         out
 #endif
             T> : IEnumerable<T> where T : JToken
