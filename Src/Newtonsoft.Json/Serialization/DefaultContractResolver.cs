@@ -51,9 +51,12 @@ using Newtonsoft.Json.Utilities.LinqBridge;
 using System.Linq;
 
 #endif
+#if UNITY_5
+using Newtonsoft.Json.Converters.Unity;
+#endif
 
 namespace Newtonsoft.Json.Serialization
-{                                             
+{
     internal struct ResolverContractKey : IEquatable<ResolverContractKey>
     {
         private readonly Type _resolverType;

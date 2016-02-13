@@ -37,7 +37,7 @@ using System.Linq.Expressions;
 using System.IO;
 using Newtonsoft.Json.Utilities;
 using System.Globalization;
-#if NET20 || UNITY_5
+#if NET20 
 using Newtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;

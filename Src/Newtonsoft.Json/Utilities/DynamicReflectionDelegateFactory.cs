@@ -26,7 +26,7 @@
 #if !(DOTNET || PORTABLE || PORTABLE40)
 using System;
 using System.Collections.Generic;
-#if NET20 || UNITY_5
+#if NET20 
 using Newtonsoft.Json.Utilities.LinqBridge;
 #endif
 using System.Reflection;

@@ -1,5 +1,5 @@
 ﻿
-#if NET20 || UNITY_5
+#if NET20  
 
 #region License, Terms and Author(s)
 //

@@ -33,7 +33,7 @@ using Newtonsoft.Json.Utilities;
 using System.Collections;
 using System.Globalization;
 using System.ComponentModel;
-#if NET20 || UNITY_5
+#if NET20 
 using Newtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;
