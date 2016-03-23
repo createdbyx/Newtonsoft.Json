@@ -16,3 +16,4 @@ _ReSharper.*
 *.nuget.props
 *.nuget.targets
 *.orig
+*.meta

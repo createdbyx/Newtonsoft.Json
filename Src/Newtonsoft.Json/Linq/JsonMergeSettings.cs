@@ -39,7 +39,7 @@ namespace Newtonsoft.Json.Linq
             {
                 if (value < MergeNullValueHandling.Ignore || value > MergeNullValueHandling.Merge)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value));
+                    throw new ArgumentOutOfRangeException("value");
                 }
 
                 _mergeNullValueHandling = value;
